@@ -1,0 +1,17 @@
+{
+    "field": {
+        "email": "email",
+        "password": "password",
+        "passwordConfirm": "passwordConfirm",
+        "firstName": "first name",
+        "lastName": "last name"
+    },
+    "wordsAndPhrases": {
+        "record": "record",
+        "field": "field",
+        "field_plural": "fields",
+        "fieldWithCount": "{{count}} field",
+        "fieldWithCount_plural": "{{count}} fields",
+        "exists": "already exists"
+    }
+}

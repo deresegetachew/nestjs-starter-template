@@ -1,4 +1,22 @@
 {
   "collection": "@nestjs/schematics",
-  "sourceRoot": "src"
+  "sourceRoot": "src",
+  "projects": {
+    "exception-filters": {
+      "type": "library",
+      "root": "libs/exception-filters",
+      "entryFile": "index",
+      "sourceRoot": "libs/exception-filters/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/exception-filters/tsconfig.lib.json"
+      }
+    }
+  },
+  "compilerOptions": {
+    "webpack": false,
+    "assets": [
+      "i18n/locale/**/*"
+    ],
+    "watchAssets": true
+  }
 }

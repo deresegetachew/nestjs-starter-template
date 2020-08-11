@@ -1,0 +1,9 @@
+{
+    "field": {
+        "email": "ኢሜል",
+        "password": "የይለፍ ቃል",
+        "passwordConfirm": "የይለፍ ቃል አዛምድ",
+        "firstName": "የመጀመሪያ ስም",
+        "lastName": "የአያት/የአባት ስም"
+    }
+}

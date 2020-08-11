@@ -1,0 +1,6 @@
+{
+    "error": {
+        "invalid-credentials": " የተሳሳተ ኢሜል ወይም ፖስወርድ",
+        "internal-server-error": "አፕሊኬሽኑ ያልታወቀ ችግር ገጥምታል ፥ እባኮት አንደ ገና ይምክሩ ።"
+    }
+}
