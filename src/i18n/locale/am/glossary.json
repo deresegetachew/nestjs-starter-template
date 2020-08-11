@@ -5,5 +5,13 @@
         "passwordConfirm": "የይለፍ ቃል አዛምድ",
         "firstName": "የመጀመሪያ ስም",
         "lastName": "የአያት/የአባት ስም"
+    },
+    "wordsAndPhrases": {
+        "record-with": "በውሂብ ውስጥ",
+        "field": "መስክ",
+        "field_plural": "መስኮች",
+        "fieldWithCount": "{{count}} መስክ",
+        "fieldWithCount_plural": "{{count}} መስኮች",
+        "exists": "አስቀድሞ አለ"
     }
 }

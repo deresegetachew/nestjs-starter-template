@@ -2,6 +2,5 @@
     "error": {
         "invalid-credentials": "Invalid email or password $t(common:shit)",
         "internal-server-error": "Something went wrong from our side, please try again"
-    },
-    "shit": "shitttt"
+    }
 }

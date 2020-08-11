@@ -20,15 +20,26 @@ const usePgMessage: IBuildErrorMessage = (args) => {
     return [args.detail];
 }
 
+/**
+ * 
+ * @param {string} args
+ * @returns {string} 
+ * @description formats the unique validation message from pg in a format that suits our i18n formating.
+ * it handels both cases of composite unique key validations and single unique key validations. Incase of Composite unique key we will receive msg formated as 
+ * "key (fieldname,fieldname) = (value,value) already exists" which we intern transfer in to
+ * '$t(glossary:wordsAndPhrases.record) with $t(gloassary:wordsAndPhrases.field,{\"count\":2}) $t(glossary:dbfileds.email),(email.com) $t(glossary:dbfileds.firstName),(name) $t(glossary:wordsAndPhrases.exists)'
+ * and return it to our translating service. please refere to our locale messages to see the menaing of values like glossary:wordsAndPrhases.record
+ * we are using i18next which supports namespacing and nesting for more on i18next refere [https://www.i18next.com/translation-function/nesting]
+ */
 const uniqueViolation: IBuildErrorMessage = (args): string[] => {
     //expected args.detail = " key (fieldname,fieldname) = (value,value) already exists";
+    console.log("incoming <----", args.detail);
     let errTxt = "";
     let textinBraces = new RegExp(/(?:\(...*\))/gm);
     let braces = new RegExp(/(?:[\(]+|[\)+])/gm);
     let quotes = new RegExp(/(?:\")/gm);
 
     let match = args.detail.match(textinBraces);
-    console.log("???? I AM HERE", args.detail);
     if (match.length > 0) {
 
         let txt: string = match[0];
@@ -62,16 +73,13 @@ const uniqueViolation: IBuildErrorMessage = (args): string[] => {
         }
 
         errTxt = errTxt.concat(`$t(glossary:wordsAndPhrases.exists)`);
-        errTxt = `$t(glossary:wordsAndPhrases.record) with ` + errTxt;
+        errTxt = `$t(glossary:wordsAndPhrases.record-with) ` + errTxt;
     }
 
-
-
     errTxt.trim();
-    console.log("-->", errTxt);
 
     //errTxt = `$t(glossary:wordsAndPhrases.record) with $t(gloassary:wordsAndPhrases.field,{\"count\":2}) $t(glossary:dbfileds.email),(deresegetachew@gmail.com) $t(glossary:dbfileds.firstName),(derese) $t(glossary:wordsAndPhrases.exists)`;
-    return [errTxt]; // format the text here
+    return [errTxt];
 }
 
 export const PostgresErrors: IPgMessages = {

@@ -7,7 +7,7 @@
         "lastName": "last name"
     },
     "wordsAndPhrases": {
-        "record": "record",
+        "record-with": "record with",
         "field": "field",
         "field_plural": "fields",
         "fieldWithCount": "{{count}} field",
