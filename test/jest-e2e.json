@@ -12,6 +12,10 @@
   },
   "moduleNameMapper": {
     "@app/exception-filters/(.*)": "<rootDir>/../libs/exception-filters/src/$1",
-    "@app/exception-filters": "<rootDir>/../libs/exception-filters/src"
+    "@app/exception-filters": "<rootDir>/../libs/exception-filters/src",
+    "@lib/common/(.*)": "<rootDir>/../libs/common/src/$1",
+    "@lib/common": "<rootDir>/../libs/common/src",
+    "@db/pg-connect/(.*)": "<rootDir>/../libs/pg-connect/src/$1",
+    "@db/pg-connect": "<rootDir>/../libs/pg-connect/src"
   }
 }

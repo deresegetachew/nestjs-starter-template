@@ -1,15 +1,11 @@
 
-import { Injectable, OnModuleInit, Logger, Inject, LoggerService } from '@nestjs/common';
-import { Handler, Request } from 'express';
-import i18next, { TFunction, ExistsFunction, i18n } from 'i18next';
-import middleware from 'i18next-http-middleware';
-import Backend from 'i18next-fs-backend';
-import * as path from 'path';
-
-
-import { I18nError } from './i18n-error';
+import { I18nError, I18nMessage, MessageVarType } from '@lib/common';
+import { Inject, Injectable, Logger, LoggerService } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { pathToFileURL } from 'url';
+import { Handler, Request } from 'express';
+import i18next, { ExistsFunction, TFunction } from 'i18next';
+import middleware from 'i18next-http-middleware';
+
 
 
 
@@ -47,22 +43,21 @@ export class I18nService {
         const originalError = error;
         const t: TFunction = req.t;
 
-        // console.log("???", originalError)
+
         if (t && originalError) {
 
+            // console.log("**&", JSON.stringify(originalError));
             //console.log("inside t & originalError", originalError.message);
             let translation = originalError.message;
 
             try {
-                console.log('trying????', translation);
                 translation = t(originalError.message, originalError.variables);
             } catch (e) {
-                console.log("??>>>");
                 translation += `(Translation format error: ${e.message})`;
                 this.logger.error(translation);
             }
 
-            console.log("@@", JSON.stringify(error));
+            //console.log("@@", JSON.stringify(error));
 
             error.message = translation;
             // We can now safely remove the variables object so that they do not appear in
@@ -74,23 +69,47 @@ export class I18nService {
         return error;
     }
 
-    // translateMessage(req: I18nRequest, messageObj: I18nMessage): string {
-    //     const t: TFunction = req.t;
-    //     let translation = messageObj.message;
-
-    //     if (t && messageObj) {
-    //         try {
-    //             translation = t(messageObj.message, messageObj.variables);
-    //         } catch (e) {
-    //             translation += ` (Translation format error: ${e.message})`;
-    //             this.logger.error(translation);
-    //         }
-
-    //     };
+    translateMessage(req: I18nRequest, messageObj: I18nMessage, data: any): string {
+        const t: TFunction = req.t;
+        const originalMessage = messageObj;
 
 
+        if (t && originalMessage) {
+            let translation: string = originalMessage.message;
 
-    //     return translation;
-    // }
+            try {
+                //extract variables
+                let extractVar: { [k: string]: string | number } = {};
+
+
+                if (Object.keys(originalMessage.variables).length > 0) {
+
+                    for (const key in originalMessage.variables) {
+                        if (originalMessage.variables.hasOwnProperty(key)) {
+                            const element = originalMessage.variables[key];
+
+                            if (element.type == MessageVarType.global) {
+                                extractVar[element.tkey] = this.configService.get(key);
+                            }
+                            else if (element.type == MessageVarType.field) {
+                                extractVar[element.tkey] = data[key];
+                            }
+
+                        }
+                    }
+                }
+
+                console.log("@@##", extractVar);
+
+                translation = t(originalMessage.message, extractVar);
+            } catch (e) {
+                translation += ` (Translation format error: ${e.message})`;
+                this.logger.error(translation);
+            }
+
+            return translation;
+        }
+        return "";
+    }
 
 }

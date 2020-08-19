@@ -1,0 +1,6 @@
+{
+    "is-not-empty": "{{field}} can not be empty",
+    "min-length": "{{field}} must be longer than or equal to {{length}} characters",
+    "is-email": "email '{{email}}' is not valid",
+    "is-string": "{{field}} must be a text"
+}

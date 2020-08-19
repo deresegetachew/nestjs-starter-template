@@ -1,6 +1,11 @@
 {
     "error": {
-        "invalid-credentials": "Invalid email or password $t(common:shit)",
-        "internal-server-error": "Something went wrong from our side, please try again"
+        "invalid-credentials": "Invalid email or password",
+        "internal-server-error": "Something went wrong from our side, please try again",
+        "email-taken": "An account with $t(glossary:field.email) {{email}} already exists",
+        "password-to-short": "Password must be longer than or equal to {{length}} charachters"
+    },
+    "message": {
+        "welcome-login": "Welcome back to {{appname}} {{firstName}}"
     }
 }

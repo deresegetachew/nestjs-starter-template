@@ -14,7 +14,5 @@ export class AuthorizationGuard implements CanActivate {
 
 
 const validateRequest = (request: any): boolean => {
-
-
   return true;
 }

@@ -1,4 +1,4 @@
-import { IsEmail, IsString, IsNotEmpty, IsOptional } from 'class-validator';
+import { IsEmail, IsString, IsNotEmpty, IsOptional, MinLength, MaxLength } from 'class-validator';
 import { Match } from '../../common/match.validation';
 
 
@@ -16,6 +16,8 @@ class SignUpDto {
     lastName: string;
 
     @IsNotEmpty()
+    @MinLength(8)
+    @MaxLength(20)
     password: string;
 
     @IsNotEmpty()

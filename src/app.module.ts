@@ -1,16 +1,17 @@
-import { Module, OnApplicationBootstrap, Logger, NestModule, MiddlewareConsumer } from '@nestjs/common';
-import { UserModule } from './user/user.module';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import appConfig from './config/app.config';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from './user/user.entity';
-import { ClientModule } from './client/client.module';
-import { AuthorizationModule } from './authorization/authorization.module';
-import { AuthModule } from './auth/auth.module';
-import TypeOrmConfigService from './config/typeOrm.config';
+// import TypeOrmConfigService from './config/typeOrm.config';
 import { ExceptionFiltersModule } from '@app/exception-filters';
+import { Logger, MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { PgConnectModule } from 'libs/pg-connect/src';
+import { TypeOrmConfigService } from 'libs/pg-connect/src/config/typeorm.config';
+import { AuthModule } from './auth/auth.module';
+import { AuthorizationModule } from './authorization/authorization.module';
+import { ClientModule } from './client/client.module';
+import appConfig from './config/app.config';
 import { I18nModule } from './i18n/i18n.module';
 import { I18nService } from './i18n/i18n.service';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { I18nService } from './i18n/i18n.service';
       isGlobal: true,
       load: [appConfig]
     }),
+    PgConnectModule,
     UserModule,
     ClientModule,
     AuthorizationModule,

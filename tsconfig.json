@@ -17,6 +17,18 @@
       ],
       "@app/exception-filters/*": [
         "libs/exception-filters/src/*"
+      ],
+      "@lib/common": [
+        "libs/common/src"
+      ],
+      "@lib/common/*": [
+        "libs/common/src/*"
+      ],
+      "@db/pg-connect": [
+        "libs/pg-connect/src"
+      ],
+      "@db/pg-connect/*": [
+        "libs/pg-connect/src/*"
       ]
     }
   },

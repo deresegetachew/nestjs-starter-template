@@ -1,24 +1,25 @@
-import { I18nError } from 'src/i18n/i18n-error';
-import { LogLevel } from 'src/common/logLevel';
+import { commonErrorLocaleKey, I18nError, LogLevel } from '@lib/common';
 import { InternalServerErrorException } from '@nestjs/common';
-import commonErrorEnums from './error.enums';
 
+/**
+ * @description
+ * This error should be thrown when some unexpected and exceptional case is encountered.
+ * This are usually cases we forgot to handle
+ * @docsCategory errors
+ * @docsPage Error Types
+ */
 class InternalServerError extends InternalServerErrorException {
-    public i18nError: InternalServerErrorI18n;
-    constructor(internalMsg?: string[]) {
+    public I18nError: InternalServerErrorI18n;
+    constructor(internalMsg?: string) {
         super()
-        if (internalMsg)
-            this.i18nError = new InternalServerErrorI18n(internalMsg ? internalMsg[0] : null, {});
-        else
-            this.i18nError = new InternalServerErrorI18n(commonErrorEnums.internalServerError, {});
-        console.log("%%% internal server error", internalMsg);
+        this.I18nError = new InternalServerErrorI18n(commonErrorLocaleKey.internalServerError, {}, internalMsg);
     }
 
 }
 
 class InternalServerErrorI18n extends I18nError {
-    constructor(message: string, varibales: { [key: string]: string | number } = {}) {
-        super(message, varibales, LogLevel.Error);
+    constructor(message: string, varibales: { [key: string]: string | number } = {}, messageForDeveloper?: string) {
+        super(message, varibales, LogLevel.Error, messageForDeveloper);
     }
 }
 

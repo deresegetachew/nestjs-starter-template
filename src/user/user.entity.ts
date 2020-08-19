@@ -1,5 +1,6 @@
-import { Entity, BaseEntity, PrimaryGeneratedColumn, Column, Unique, CreateDateColumn, UpdateDateColumn } from "typeorm";
-import { Exclude } from 'class-transformer';
+import { Entity, BaseEntity, PrimaryGeneratedColumn, Column, Unique, CreateDateColumn, UpdateDateColumn, BeforeInsert, BeforeUpdate } from "typeorm";
+import { Exclude, Expose } from 'class-transformer';
+import { IsNotEmpty } from "class-validator";
 
 @Entity()
 export class User extends BaseEntity {
@@ -9,18 +10,26 @@ export class User extends BaseEntity {
 
     @Column({ type: "varchar", length: 250 })
     @Unique("user_unique_email", ['email'])
+    @IsNotEmpty()
     email: string;
 
     @Column({ type: "varchar", length: 250 })
-    @Unique("unique_first_name", ["firstName"])
+    @IsNotEmpty()
     firstName: string;
 
     @Column({ type: "varchar", length: 250 })
     lastName: string;
 
-    @Column({ type: "varchar", length: 120 })
+    @Expose()
+    get fullName(): string {
+        return `${this.firstName} ${this.lastName}`;
+    }
+
+    @Column({ type: "varchar", length: 250 })
     @Exclude()
+    @IsNotEmpty()
     password: string;
+
 
     @Column({ default: true })
     @Exclude()
@@ -52,4 +61,7 @@ export class User extends BaseEntity {
     @Exclude()
     updatedAt
 
+
 }
+
+

@@ -1,9 +1,10 @@
-import { Injectable, NotFoundException, InternalServerErrorException, ValidationPipe, NotImplementedException } from '@nestjs/common';
+import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { PasswordCipher } from 'src/user/cipher/password';
+import { CreateUserDto, UpdateUserDto } from './dto';
+import AccountWithEmailExistsException from './messages/accountWithEmailExists.exception';
 import { User } from './user.entity';
 import { UserRepository } from './user.repository';
-import { CreateUserDto, UpdateUserDto } from './dto';
-import { isEmail, IsEmail } from 'class-validator';
 
 
 @Injectable()
@@ -11,6 +12,7 @@ export class UserService {
     constructor(
         @InjectRepository(UserRepository)
         private usersRepository: UserRepository,
+        private passwordCipher: PasswordCipher
     ) { }
 
     findAll(): Promise<User[]> {
@@ -37,12 +39,21 @@ export class UserService {
 
     async create(user: CreateUserDto): Promise<User> {
 
-        let count = await this.usersRepository.count({});
-        if (count == 0) {
-            //register as admin
-            user.isAdmin = true;
+        //check if email is already taken
+        let emailAvailable = await this.emailIsAvailable(user.email);
+
+        if (emailAvailable) {
+            let count = await this.usersRepository.count({});
+            if (count == 0) {
+                //register as admin
+                user.isAdmin = true;
+            }
+
+            const hashedPass = await this.passwordCipher.hash(user.password);
+            return await this.usersRepository.createUser({ ...user, password: hashedPass });
         }
-        return await this.usersRepository.createUser(user);
+        else
+            throw new AccountWithEmailExistsException(user.email);
     }
 
     async updateUserDetail(id: number, userDetail: UpdateUserDto): Promise<User> {
