@@ -1,7 +1,7 @@
-import { EntityRepository, Repository } from 'typeorm';
-import { User } from './user.entity';
-import { CreateUserDto, UpdateUserDto } from './dto';
 import { NotFoundException } from '@nestjs/common';
+import { EntityRepository, Repository } from 'typeorm';
+import { CreateUserDto, UpdateUserDto } from './dto';
+import { User } from './user.entity';
 
 
 // import { CreateAdminDto } from './dto';
@@ -22,18 +22,19 @@ export class UserRepository extends Repository<User> {
         isActive ? user.isActive = isActive : null;
         accountConfirmed ? user.accountConfirmed = accountConfirmed : null;
 
-        return await user.save();
+
+        return await this.save(user);
 
     }
 
     async updateUser(id: number, updateUserDto: UpdateUserDto): Promise<User> {
         let { firstName, lastName } = updateUserDto;
-        let user = await this.findOne({ id });
+        let user = await this.findOne(id)
         if (user) {
             user.firstName = firstName;
             user.lastName = lastName;
 
-            await user.save();
+            await this.save(user);
             return user;
         }
         else

@@ -1,4 +1,4 @@
-import { I18nError, IAppResponse, LogLevel } from "@lib/common";
+import { formatResponse, I18nError, IAppResponse, LogLevel } from "@lib/common";
 import { ArgumentsHost, Catch, ExceptionFilter, HttpException, HttpStatus, Inject, Logger, LoggerService } from '@nestjs/common';
 import { Response } from 'express';
 import { PgConnectService } from "libs/pg-connect/src";
@@ -14,6 +14,8 @@ export class AppExceptionFilter implements ExceptionFilter {
         const ctx = host.switchToHttp();
         const response = ctx.getResponse<Response<IAppResponse<any>>>();
         const request = ctx.getRequest<I18nRequest>();
+
+
         let tException: I18nError[] = [];
         const status = exception instanceof HttpException
             ? exception.getStatus()
@@ -25,11 +27,7 @@ export class AppExceptionFilter implements ExceptionFilter {
             const tException = this.i18nService.translateError(request, exception.I18nError);
 
             response.status(status)
-                .json({
-                    statusCode: status,
-                    message: [tException.message],
-                    data: null
-                });
+                .json(formatResponse(status, [tException.message], null));
         }
         else {
             if (exception.query || exception.table) {
@@ -43,19 +41,12 @@ export class AppExceptionFilter implements ExceptionFilter {
                     this.logger.error(`db_error:no_handler: ${exception.response}`);
                 }
 
-
-
-
                 let internalError = this.pgConnectService.throwPgError(handler.getMessage(exception));
 
                 const tException = this.i18nService.translateError(request, internalError.I18nError);
 
                 response.status(status)
-                    .json({
-                        statusCode: status,
-                        message: [tException.message],
-                        data: null
-                    });
+                    .json(formatResponse(status, [tException.message]));
             }
             else {
                 //errors that passed trough our error interceptors
@@ -90,7 +81,7 @@ export class AppExceptionFilter implements ExceptionFilter {
                 }
 
                 const message: string[] = tException.map(te => te?.message);
-                response.status(status).json({ data: null, statusCode: status, message });
+                response.status(status).json(formatResponse(status, message, null));
             }
         }
     }

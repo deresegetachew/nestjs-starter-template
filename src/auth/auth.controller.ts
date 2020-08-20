@@ -1,13 +1,9 @@
-import { Controller, Post, Body, ClassSerializerInterceptor, UseInterceptors, UseGuards, Res, HttpStatus, HttpCode, Req, SetMetadata } from '@nestjs/common';
-import { LoginDto, SignUpDto } from './dto';
-import { AuthGuard } from '@nestjs/passport';
-import { AuthService } from './auth.service';
+import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
 import { User } from '../user/user.entity';
-import IRequestWithUser from './interface/IRequestWithUser';
-import { messageEnums } from '../common/localeKey.enum';
-import { welcomeMessage } from './messages';
-import { IAppResponse } from '@lib/common';
+import { AuthService } from './auth.service';
 import { SuccessMsg } from './decorator/successMessage.decorator';
+import { LoginDto, SignUpDto } from './dto';
+import { welcomeMessage } from './messages';
 
 
 type RequestRes = Request & {
@@ -41,6 +37,7 @@ export class AuthController {
 
 
     @Post('signup')
+    // @SuccessMsg(successfullySignedUp(),anEmailHasBeenSentToYourAccount())
     async singUp(@Body() signUpDto: SignUpDto): Promise<User> {
         return this.authService.signUp(signUpDto);
     }

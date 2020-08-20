@@ -99,8 +99,6 @@ export class I18nService {
                     }
                 }
 
-                console.log("@@##", extractVar);
-
                 translation = t(originalMessage.message, extractVar);
             } catch (e) {
                 translation += ` (Translation format error: ${e.message})`;

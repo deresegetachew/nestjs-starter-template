@@ -1,4 +1,4 @@
-import { I18nMessage, IAppResponse } from '@lib/common';
+import { formatResponse, I18nMessage, IAppResponse } from '@lib/common';
 import { CallHandler, ExecutionContext, Injectable, Logger, NestInterceptor, NotImplementedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Reflector } from '@nestjs/core';
@@ -44,11 +44,7 @@ export class TranslateInterceptor<T> implements NestInterceptor<T, IAppResponse<
 
                 return next.handle()
                     .pipe(map(value => {
-                        return {
-                            statusCode: res.statusCode,
-                            data: value,
-                            message: successMsg.map((_msg) => this.i18nService.translateMessage(req, _msg, value))
-                        }
+                        return formatResponse(res.statusCode, successMsg?.map((_msg) => this.i18nService.translateMessage(req, _msg, value)), value)
                     }));
             }
 

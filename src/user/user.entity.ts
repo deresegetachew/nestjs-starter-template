@@ -1,12 +1,11 @@
-import { Entity, BaseEntity, PrimaryGeneratedColumn, Column, Unique, CreateDateColumn, UpdateDateColumn, BeforeInsert, BeforeUpdate } from "typeorm";
 import { Exclude, Expose } from 'class-transformer';
 import { IsNotEmpty } from "class-validator";
+import { AppBaseEntity } from 'src/common/entity/base.entity';
+import { SoftDeletable } from 'src/common/entity/entity-types';
+import { Column, Entity, Unique } from "typeorm";
 
 @Entity()
-export class User extends BaseEntity {
-
-    @PrimaryGeneratedColumn()
-    id: number;
+export class User extends AppBaseEntity implements SoftDeletable {
 
     @Column({ type: "varchar", length: 250 })
     @Unique("user_unique_email", ['email'])
@@ -30,7 +29,6 @@ export class User extends BaseEntity {
     @IsNotEmpty()
     password: string;
 
-
     @Column({ default: true })
     @Exclude()
     isActive: boolean;
@@ -53,15 +51,8 @@ export class User extends BaseEntity {
     @Column({ default: 'en' })
     locale: string
 
-    @CreateDateColumn()
-    @Exclude()
-    createdAt
-
-    @UpdateDateColumn()
-    @Exclude()
-    updatedAt
-
-
+    @Column({ type: Date, nullable: true })
+    deletedAt: Date | null;
 }
 
 

@@ -12,6 +12,16 @@ type ErrorResponse<T> = {
 
 export type IAppResponse<T> = SuccessResponse<T> | ErrorResponse<T>;
 
+export type SortOrder = 'ASC' | 'DESC';
+
+/**
+ * A type describing the shape of a paginated list response
+ */
+export type PaginatedList<T> = {
+    items: T[];
+    totalItems: number;
+};
+
 
 /**
  * @description this type is used during building a message and to translate it to the appropriate
