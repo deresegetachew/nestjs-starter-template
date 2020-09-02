@@ -6,8 +6,6 @@ import { flatten } from 'lodash';
 export const dataValidationExceptionFactory = () => {
     return (errors: ValidationError[]) => {
 
-        console.log("@@@@");
-
         const translatedErrors = errors.map((e) => {
             console.log("???", e);
             const field = e.property;
@@ -24,7 +22,7 @@ export const dataValidationExceptionFactory = () => {
                 else if (c == IS_STRING)
                     return new IsString(field);
                 else {
-                    throw new InternalServerError(`${c} Dto exception handler not implemented`);
+                    throw new InternalServerError(`${c} Dto exception handler not implemented, Please implement I18nError friendly Message handler for the exception`);
                     //return new InternalServerError(`${c} Dto exception handler not implemented`);
                 }
 
