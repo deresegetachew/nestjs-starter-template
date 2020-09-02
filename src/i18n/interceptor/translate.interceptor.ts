@@ -26,9 +26,9 @@ export class TranslateInterceptor<T> implements NestInterceptor<T, IAppResponse<
 
     intercept(context: ExecutionContext, next: CallHandler): Observable<IAppResponse<T>> {
         if (context.getType() === 'http') {
-            let res = context.switchToHttp().getResponse();
-            let req = context.switchToHttp().getRequest();
-            let status = context.switchToHttp();
+            const res = context.switchToHttp().getResponse();
+            const req = context.switchToHttp().getRequest();
+            const status = context.switchToHttp();
 
             //asumption in this is only for intercepting non error messages
             //translate messages here

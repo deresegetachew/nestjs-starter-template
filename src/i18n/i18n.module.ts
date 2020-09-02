@@ -26,7 +26,7 @@ export class I18nModule implements OnModuleInit {
       .use(Backend as any)
       .init({
         preload: ['en', "am"],
-        ns: ["common", "glossary", "dto",],
+        ns: ["common", "glossary", "dto"],
         fallbackLng: 'en',
         fallbackNS: ["common", "glossary", "dto"],
         detection: {
@@ -39,7 +39,7 @@ export class I18nModule implements OnModuleInit {
         initImmediate: true,
         debug: false// this.configService.get<string>('NODE_ENV') == 'development' ? true : false
       }, (err, t) => {
-
+        console.log(i18next.t);
         if (err)
           this.logger.error(`translation error: ${err}`)
       });

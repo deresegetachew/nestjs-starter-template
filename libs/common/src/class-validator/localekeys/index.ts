@@ -3,6 +3,4 @@ export const enum localeKey {
     minLength = 'dto:min-length',
     isEmail = 'dto:is-email',
     isString = 'dto:is-string'
-
-
 }

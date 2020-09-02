@@ -1,15 +1,15 @@
-import { IsEmail, IsNotEmpty, IsString, MinLength } from '@lib/common';
+import { InternalServerError, IsEmail, IsNotEmpty, IsString, MinLength } from '@lib/common';
 import { IS_EMAIL, IS_NOT_EMPTY, IS_STRING, MIN_LENGTH, ValidationError } from "class-validator";
 import { flatten } from 'lodash';
-import InternalServerError from './error/internalServer.error';
 
 
 export const dataValidationExceptionFactory = () => {
     return (errors: ValidationError[]) => {
 
+        console.log("@@@@");
 
-        let translatedErrors = errors.map((e) => {
-            console.log(e);
+        const translatedErrors = errors.map((e) => {
+            console.log("???", e);
             const field = e.property;
             const value = e.value;
             const constraints = Object.keys(e.constraints);

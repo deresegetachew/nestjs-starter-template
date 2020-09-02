@@ -1,10 +1,10 @@
 // import TypeOrmConfigService from './config/typeOrm.config';
 import { ExceptionFiltersModule } from '@app/exception-filters';
-import { Logger, MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
+import { TypeOrmConfigService } from '@db/pg-connect';
+import { Logger, MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PgConnectModule } from 'libs/pg-connect/src';
-import { TypeOrmConfigService } from 'libs/pg-connect/src/config/typeorm.config';
 import { AuthModule } from './auth/auth.module';
 import { AuthorizationModule } from './authorization/authorization.module';
 import { ClientModule } from './client/client.module';
@@ -16,7 +16,7 @@ import { UserModule } from './user/user.module';
 @Module({
   imports: [
     TypeOrmModule.forRootAsync({
-      useClass: TypeOrmConfigService
+      useClass: TypeOrmConfigService,
     }),
     ConfigModule.forRoot({
       isGlobal: true,
@@ -38,7 +38,7 @@ export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     const i18nextHandler = this.i18nService.handler(); //this will attach t to request
     //cors, helmet, logger
-    consumer.apply(i18nextHandler).forRoutes("/auth", "/user");
+    consumer.apply(i18nextHandler).forRoutes({ path: "*", method: RequestMethod.ALL });
   }
 
 

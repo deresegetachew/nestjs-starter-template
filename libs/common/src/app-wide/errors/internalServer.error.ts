@@ -1,5 +1,6 @@
-import { commonErrorLocaleKey, I18nError, LogLevel } from '@lib/common';
 import { InternalServerErrorException } from '@nestjs/common';
+import { I18nError, LogLevel } from '../../shared-types';
+import { commonErrorLocaleKey } from '../localekeys';
 
 /**
  * @description
@@ -8,7 +9,14 @@ import { InternalServerErrorException } from '@nestjs/common';
  * @docsCategory errors
  * @docsPage Error Types
  */
-class InternalServerError extends InternalServerErrorException {
+
+class InternalServerErrorI18n extends I18nError {
+    constructor(message: string, variables: { [key: string]: string | number } = {}, messageForDeveloper?: string) {
+        super(message, variables, LogLevel.Error, messageForDeveloper);
+    }
+}
+
+export class InternalServerError extends InternalServerErrorException {
     public I18nError: InternalServerErrorI18n;
     constructor(internalMsg?: string) {
         super()
@@ -17,11 +25,3 @@ class InternalServerError extends InternalServerErrorException {
 
 }
 
-class InternalServerErrorI18n extends I18nError {
-    constructor(message: string, varibales: { [key: string]: string | number } = {}, messageForDeveloper?: string) {
-        super(message, varibales, LogLevel.Error, messageForDeveloper);
-    }
-}
-
-
-export default InternalServerError;

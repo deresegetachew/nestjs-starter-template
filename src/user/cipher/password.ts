@@ -1,5 +1,5 @@
-import crypto from "crypto";
 import { Injectable } from "@nestjs/common";
+import crypto from "crypto";
 
 @Injectable()
 export class PasswordCipher {
@@ -15,7 +15,7 @@ export class PasswordCipher {
     }
 
 
-    check(password: string, hashedPasswordAndSalt: string): Promise<Boolean> {
+    check(password: string, hashedPasswordAndSalt: string): Promise<boolean> {
         return new Promise((resolve, reject) => {
             const [salt, hashedPassword] = hashedPasswordAndSalt.split(":");
             console.log("$$$", salt, hashedPassword);

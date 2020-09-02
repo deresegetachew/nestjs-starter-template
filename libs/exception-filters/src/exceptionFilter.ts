@@ -1,8 +1,7 @@
-import { formatResponse, I18nError, IAppResponse, LogLevel } from "@lib/common";
+import { formatResponse, I18nError, IAppResponse, InternalServerError, LogLevel } from "@lib/common";
 import { ArgumentsHost, Catch, ExceptionFilter, HttpException, HttpStatus, Inject, Logger, LoggerService } from '@nestjs/common';
 import { Response } from 'express';
 import { PgConnectService } from "libs/pg-connect/src";
-import InternalServerError from "src/common/error/internalServer.error";
 import { I18nRequest, I18nService } from 'src/i18n/i18n.service';
 
 
@@ -53,24 +52,26 @@ export class AppExceptionFilter implements ExceptionFilter {
                 //or errors from guards or those that are called before interceptors and that threw error
                 //use i18nservice to translate messages here
 
+
                 if (Array.isArray(exception)) {
                     tException = exception.map((ex) => {
                         if (ex.I18nError) {
                             return this.i18nService.translateError(request, ex.I18nError);
                         }
                         else {
-                            this.logger.error(`Untranslated Error: ${ex.stack}`)
+                            this.logger.error(`Untranslated Error: ${ex.message} ' Stack: ' ${ex.stack}`)
                             return ex;
                         }
                     });
                 }
                 else {
                     if (exception.I18nError) {
+                        // console.log(">>>", request);
                         tException.push(this.i18nService.translateError(request, exception.I18nError));
                     }
                     else {
                         //its an error that hasnot yet been translated
-                        this.logger.error(`Untranslated Error: ${exception.stack}`)
+                        this.logger.error(`Untranslated Error: ${exception.message} ' Stack: ' ${exception.stack}`)
                         //tException = [...exception];
                         if (Array.isArray(exception?.response?.message))
                             tException = exception?.response?.message;

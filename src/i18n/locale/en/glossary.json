@@ -1,5 +1,9 @@
 {
+    "entity": {
+        "User": "User"
+    },
     "field": {
+        "id": "id",
         "email": "email",
         "password": "password",
         "passwordConfirm": "passwordConfirm",

@@ -1,13 +1,14 @@
-import { Controller, Get, Post, Body, Param, UsePipes, ValidationPipe, ParseIntPipe, Delete, NotImplementedException, UseInterceptors, ClassSerializerInterceptor, Put, SerializeOptions } from '@nestjs/common';
-import { UserService } from './user.service';
-import { ResetPasswordDto, CreateUserDto, UpdateUserDto } from './dto';
+import { Body, Controller, Get, HttpCode, HttpStatus, Param, ParseUUIDPipe, Post, Put } from '@nestjs/common';
+import { parseUUIDExceptionFactory } from 'src/common/parseUUIDExceptionFactory';
+import { CreateUserDto, UpdateUserDto } from './dto';
 import { User } from './user.entity';
+import { UserService } from './user.service';
 
 
 @Controller('users')
-@SerializeOptions({
-    strategy: 'excludeAll'
-})
+// @SerializeOptions({
+//     strategy: 'excludeAll'
+// })
 export class UserController {
     constructor(private userService: UserService) { }
 
@@ -19,7 +20,7 @@ export class UserController {
 
     @Post("register")
     register(@Body() data: CreateUserDto) {
-        this.userService.create(data);
+        this.userService.selfRegistration(data);
     }
 
     // @Post("/reset")
@@ -46,15 +47,23 @@ export class UserController {
 
 
     @Get("/:id")
-    useDetail(@Param('id', ParseIntPipe) id: number): Promise<User | undefined> {
+    useDetail(
+        @Param('id', new ParseUUIDPipe({
+            errorHttpStatusCode: HttpStatus.BAD_REQUEST,
+            exceptionFactory: parseUUIDExceptionFactory('id')
+        })) id: string): Promise<User> {
+        //throw new UnauthorizedException();
         return this.userService.findById(id);
     }
 
 
     @Put('/:id')
-    updateUserDetail(@Param('id', ParseIntPipe) id: number,
+    updateProfile(@Param('id', new ParseUUIDPipe({
+        errorHttpStatusCode: HttpStatus.BAD_REQUEST,
+        exceptionFactory: parseUUIDExceptionFactory('id')
+    })) id: string,
         @Body() data: UpdateUserDto): Promise<User> {
-        return this.userService.updateUserDetail(id, data);
+        return this.userService.updateProfile(id, data);
     }
 
 
@@ -69,8 +78,12 @@ export class UserController {
     // }
 
 
-    @Delete("/:id")
-    deleteUser(@Param('id', ParseIntPipe) id: number): Promise<void> {
+    @Post("/deactivate/:id")
+    @HttpCode(HttpStatus.OK)
+    deactivateUser(@Param('id', new ParseUUIDPipe({
+        errorHttpStatusCode: HttpStatus.BAD_REQUEST,
+        exceptionFactory: parseUUIDExceptionFactory('id')
+    })) id: string): Promise<boolean> {
         return this.userService.deactivateUser(id);
     }
 

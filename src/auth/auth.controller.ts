@@ -3,8 +3,7 @@ import { User } from '../user/user.entity';
 import { AuthService } from './auth.service';
 import { SuccessMsg } from './decorator/successMessage.decorator';
 import { LoginDto, SignUpDto } from './dto';
-import { welcomeMessage } from './messages';
-
+import { confirmationEmailSentToYourAccount, successfullySignedUpMessage, welcomeMessage } from './messages';
 
 type RequestRes = Request & {
     res: any
@@ -15,29 +14,20 @@ export class AuthController {
     constructor(private authService: AuthService) { }
 
 
-    // @Post('/login')
-    // @UseGuards(LocalAuthGuard)
-    // @HttpCode(HttpStatus.OK)
-    // @SuccessMsg(welcomeMessage(), welcomeMessage())
-    // login(@Req() req: IRequestWithUser) {
-    //     return req.user;
-    // }
 
-
-
-    @Post('/login')
+    @Post('login')
     @HttpCode(HttpStatus.OK)
     @SuccessMsg(welcomeMessage())
     loginUP(@Body() loginDto: LoginDto): Promise<User> {
         return this.authService.userNamePasswordLogin(loginDto);
     }
 
-    //how about we attach the mesage to the request ?? decorator
+    //how about we attach the message to the request decorator
     //typescript things like omit ... to create entityTypes + responseType
 
 
     @Post('signup')
-    // @SuccessMsg(successfullySignedUp(),anEmailHasBeenSentToYourAccount())
+    @SuccessMsg(successfullySignedUpMessage(), confirmationEmailSentToYourAccount())
     async singUp(@Body() signUpDto: SignUpDto): Promise<User> {
         return this.authService.signUp(signUpDto);
     }

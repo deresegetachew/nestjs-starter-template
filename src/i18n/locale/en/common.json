@@ -2,10 +2,16 @@
     "error": {
         "invalid-credentials": "Invalid email or password",
         "internal-server-error": "Something went wrong from our side, please try again",
+        "not-found": "$t(glossary:{{entity}}) with $t(glossary:{{field}}) {{value}} is not found ",
         "email-taken": "An account with $t(glossary:field.email) {{email}} already exists",
         "password-to-short": "Password must be longer than or equal to {{length}} charachters"
     },
     "message": {
-        "welcome-login": "Welcome back to {{appname}} {{firstName}}"
+        "welcome-login": "Welcome back to {{appname}} {{firstName}}",
+        "successfully-signed-up": "You have successfully registered an account on {{appname}} with your email {{email}}",
+        "account-confirmation-email-sent-to-your-account": "An email has been sent to {{email}}; please follow the link in the email and confirm your account."
+    },
+    "validation": {
+        "parse-uuid": "parameter {{field}} is invalid  format"
     }
 }

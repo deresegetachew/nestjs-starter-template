@@ -1,7 +1,7 @@
 import { LogLevel } from '@lib/common';
 import { BadRequestException } from "@nestjs/common";
-import { localeKey } from '../../app-wide/localekeys';
 import { I18nError } from "../../shared-types";
+import { localeKey } from '../localekeys';
 
 export class MinLength extends BadRequestException {
     public I18nError: MinLengthI18n;
