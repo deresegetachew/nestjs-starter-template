@@ -1,12 +1,14 @@
+import { Logger } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
-import { I18nService } from './i18n.service';
+import { I18nService } from '../i18n.service';
 
 describe('I18nService', () => {
   let service: I18nService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [I18nService],
+      providers: [I18nService, ConfigService, Logger],
     }).compile();
 
     service = module.get<I18nService>(I18nService);

@@ -7,6 +7,7 @@
         "password-to-short": "Password must be longer than or equal to {{length}} charachters"
     },
     "message": {
+        "test": "This is a test message",
         "welcome-login": "Welcome back to {{appname}} {{firstName}}",
         "successfully-signed-up": "You have successfully registered an account on {{appname}} with your email {{email}}",
         "account-confirmation-email-sent-to-your-account": "An email has been sent to {{email}}; please follow the link in the email and confirm your account."

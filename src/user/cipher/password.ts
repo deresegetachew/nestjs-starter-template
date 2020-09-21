@@ -18,11 +18,10 @@ export class PasswordCipher {
     check(password: string, hashedPasswordAndSalt: string): Promise<boolean> {
         return new Promise((resolve, reject) => {
             const [salt, hashedPassword] = hashedPasswordAndSalt.split(":");
-            console.log("$$$", salt, hashedPassword);
             crypto.scrypt(password, salt, 64, (err, derivedKey) => {
                 if (err) reject(err);
                 resolve(hashedPassword == derivedKey.toString('hex'));
-            })
-        })
+            });
+        });
     }
 }

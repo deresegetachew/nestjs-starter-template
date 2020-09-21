@@ -1,18 +1,5 @@
-import { registerDecorator, ValidationOptions, ValidationArguments, ValidatorConstraint, ValidatorConstraintInterface } from "class-validator";
+import { registerDecorator, ValidationArguments, ValidationOptions, ValidatorConstraint, ValidatorConstraintInterface } from "class-validator";
 
-
-export function Match(property: string, validationOptions?: ValidationOptions) {
-    return (object: any, propertyName: string) => {
-        registerDecorator({
-            name: 'Match',
-            target: object.constructor,
-            propertyName,
-            options: validationOptions,
-            constraints: [property],
-            validator: MatchConstraint,
-        });
-    };
-}
 
 @ValidatorConstraint({ name: 'Match' })
 class MatchConstraint implements ValidatorConstraintInterface {
@@ -28,3 +15,17 @@ class MatchConstraint implements ValidatorConstraintInterface {
         return `${relatedPropertyName} and ${args.property} don't match`;
     }
 }
+
+export function Match(property: string, validationOptions?: ValidationOptions) {
+    return (object: any, propertyName: string) => {
+        registerDecorator({
+            name: 'Match',
+            target: object.constructor,
+            propertyName,
+            options: validationOptions,
+            constraints: [property],
+            validator: MatchConstraint,
+        });
+    };
+}
+

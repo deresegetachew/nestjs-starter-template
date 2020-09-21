@@ -1,6 +1,6 @@
 import { InternalServerErrorException } from '@nestjs/common';
-import { I18nError, LogLevel } from '../../shared-types';
-import { commonErrorLocaleKey } from '../localekeys';
+import { I18nError, LogLevel } from '../../../shared-types';
+import { commonErrorLocaleKey } from '../../localekeys';
 
 /**
  * @description

@@ -1,10 +1,10 @@
-import { InternalServerError, NotFoundError } from '@lib/common';
+import { InternalServerError, InvalidCredentials } from '@lib/common';
 import { Injectable, NotImplementedException } from '@nestjs/common';
+import AccountWithEmailExistsException from 'src/user/messages/accountWithEmailExists.exception';
 import { UserService } from 'src/user/user.service';
 import { PasswordCipher } from '../user/cipher/password';
 import { User } from '../user/user.entity';
 import { LoginDto, SignUpDto } from './dto';
-import { InvalidCredentialsException } from './messages';
 
 
 
@@ -25,11 +25,11 @@ export class AuthService {
                 return result;
             }
             else
-                throw new InvalidCredentialsException(email);
+                throw new InvalidCredentials(email);
         }
         catch (error) {
-            if (error instanceof NotFoundError)
-                throw new InvalidCredentialsException(email);
+            if (error instanceof InvalidCredentials)
+                throw new InvalidCredentials(email);
             else
                 throw new InternalServerError(error.message);
         }
@@ -38,7 +38,6 @@ export class AuthService {
         //if active == false & accountConfirmed == false send error asking user to first confirm account.
         //if active == true && accountConfirmed == false login is success but send back a message asking user to confirm account.
     }
-
 
     async facebookLogin() {
         throw new NotImplementedException();
@@ -57,7 +56,15 @@ export class AuthService {
     }
 
     async signUp(data: SignUpDto): Promise<User> {
-        return this.userService.selfRegistration({ ...data, isAdmin: false, isActive: true, selfRegistered: true, accountConfirmed: false });
+        try {
+            return await this.userService.selfRegistration({ ...data, isAdmin: false, isActive: true, selfRegistered: true, accountConfirmed: false });
+        }
+        catch (error) {
+            if (error instanceof InternalServerError || error instanceof AccountWithEmailExistsException)
+                throw error;
+            else
+                throw new InternalServerError(error.message);
+        }
     }
 
     async logout() {

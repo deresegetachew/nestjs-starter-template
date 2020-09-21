@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`validation pipe error Locale keys matches enum definition snap shot 1`] = `"{\\"parseUUID\\":\\"common:validation.parse-uuid\\",\\"parseint\\":\\"common:validation.parse-int\\",\\"parseBool\\":\\"common:validation.parse-bool\\",\\"parseArray\\":\\"common:validation.parse-array\\"}"`;

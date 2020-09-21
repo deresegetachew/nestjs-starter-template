@@ -30,8 +30,6 @@ describe('UserService', () => {
 
   const testUser = new User();
 
-
-
   beforeAll(async () => {
 
     const moduleRef: TestingModule = await Test.createTestingModule({
@@ -68,12 +66,8 @@ describe('UserService', () => {
 
     afterEach(() => {
       userRepoFindSpyMock.mockRestore();
-    })
-
-    it('should have the repo mocked', () => {
-      userRepoFindSpyMock.mockImplementationOnce(async () => { return [testUser] });
-      expect(typeof usersRepository.find).toBe('function');
     });
+
     it('should return an array of users', async () => {
       userRepoFindSpyMock.mockImplementationOnce(async () => { return [testUser] });
       const users = await userService.findAll();
@@ -104,7 +98,8 @@ describe('UserService', () => {
       userRepoCreateSpyMock.mockRestore();
       userRepoCountSpyMock.mockRestore();
       userServiceEmailIsAvailableSpyMock.mockRestore();
-    })
+    });
+
 
     it('register non admin user', async () => {
 
@@ -123,6 +118,7 @@ describe('UserService', () => {
     });
 
     it('register as admin if user database is empty', async () => {
+
       userRepoCountSpyMock.mockResolvedValueOnce(+0);
       userServiceEmailIsAvailableSpyMock.mockResolvedValueOnce(true);
       userRepoCreateSpyMock.mockImplementationOnce((user) => { return new Promise((resolve, reject) => resolve(user)) });

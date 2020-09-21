@@ -5,7 +5,7 @@ import { localeKey } from '../localekeys';
 
 class IsEmailI18n extends I18nError {
     constructor(message: string, variables: { [key: string]: string | number } = {}) {
-        super(message, variables, LogLevel.Error);
+        super(message, variables, LogLevel.Info);
     }
 }
 

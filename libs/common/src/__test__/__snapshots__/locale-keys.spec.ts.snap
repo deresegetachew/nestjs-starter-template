@@ -1,3 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`commonErrorLocaleKey matches enum definition snapshot 1`] = `"{\\"internalServerError\\":\\"common:error.internal-server-error\\",\\"notFoundError\\":\\"common:error.not-found\\"}"`;

@@ -9,6 +9,13 @@ import { UnprocessableEntityException } from '@nestjs/common';
  * @docsCategory errors
  * @docsPage Error Types
  */
+
+class PgErrorI18n extends I18nError {
+    constructor(message: string, variables: { [key: string]: string | number } = {}) {
+        super(message, variables, LogLevel.Error);
+    }
+}
+
 class PgError extends UnprocessableEntityException {
     public I18nError: PgErrorI18n;
     constructor(internalMsg?: string[] | string) {
@@ -21,11 +28,7 @@ class PgError extends UnprocessableEntityException {
 
 }
 
-class PgErrorI18n extends I18nError {
-    constructor(message: string, varibales: { [key: string]: string | number } = {}) {
-        super(message, varibales, LogLevel.Error);
-    }
-}
+
 
 
 export default PgError;

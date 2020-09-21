@@ -50,8 +50,6 @@ export class I18nService {
             //console.log("inside t & originalError", originalError.message);
             let translation = originalError.message;
 
-
-
             try {
                 translation = t(originalError.message, originalError.variables);
             } catch (e) {
@@ -74,14 +72,14 @@ export class I18nService {
         const t: TFunction = req.t;
         const originalMessage = messageObj;
 
+        console.log("********", t, originalMessage.message);
 
         if (t && originalMessage) {
             let translation: string = originalMessage.message;
 
             try {
                 //extract variables
-                let extractVar: { [k: string]: string | number } = {};
-
+                const extractVar: { [k: string]: string | number } = {};
 
                 if (Object.keys(originalMessage.variables).length > 0) {
 
@@ -101,6 +99,8 @@ export class I18nService {
                 }
 
                 translation = t(originalMessage.message, extractVar);
+
+                console.log("*****-", originalMessage.message, extractVar, translation);
             } catch (e) {
                 translation += ` (Translation format error: ${e.message})`;
                 this.logger.error(translation);

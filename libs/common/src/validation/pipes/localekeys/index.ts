@@ -1,4 +1,4 @@
-export const enum localeKey {
+export enum localeKey {
     parseUUID = 'common:validation.parse-uuid',
     parseint = 'common:validation.parse-int',
     parseBool = 'common:validation.parse-bool',

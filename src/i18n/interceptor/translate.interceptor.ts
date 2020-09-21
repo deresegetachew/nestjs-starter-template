@@ -25,28 +25,26 @@ export class TranslateInterceptor<T> implements NestInterceptor<T, IAppResponse<
     }
 
     intercept(context: ExecutionContext, next: CallHandler): Observable<IAppResponse<T>> {
+
         if (context.getType() === 'http') {
             const res = context.switchToHttp().getResponse();
             const req = context.switchToHttp().getRequest();
             const status = context.switchToHttp();
 
-            //asumption in this is only for intercepting non error messages
+            //assumption this is only for intercepting non error messages
             //translate messages here
-            console.log("??**", res.statusCode,)
-
-
 
             if (res.statusCode < 400) {
-                console.log("--->?", this.reflector.get<I18nMessage[]>('successMsg', context.getHandler()));
-
-
                 const successMsg: I18nMessage[] = this.reflector.get<I18nMessage[]>("successMsg", context.getHandler());
-
-                return next.handle()
+                console.log("???$$$ WHAT", successMsg);
+                return next
+                    .handle()
                     .pipe(map(value => {
-                        return formatResponse(res.statusCode, successMsg?.map((_msg) => this.i18nService.translateMessage(req, _msg, value)), value)
+                        console.log("####", res.statusCode, successMsg, value);
+                        return formatResponse(res.statusCode, successMsg?.map((_msg) => this.i18nService.translateMessage(req, _msg, value)), value);
                     }));
             }
+
 
             return next.handle();
 

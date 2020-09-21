@@ -1,7 +1,7 @@
-import { parseUUIDError } from "@lib/common";
+import { ParseUUIDError } from "@lib/common";
 
 export const parseUUIDExceptionFactory = (field: string) => {
     return (errors: string) => {
-        return new parseUUIDError(field);
+        return new ParseUUIDError(field);
     }
 }

@@ -1,6 +1,6 @@
 import { NotFoundException } from "@nestjs/common";
-import { I18nError, LogLevel } from '../../shared-types';
-import { commonErrorLocaleKey } from '../localekeys';
+import { I18nError, LogLevel } from '../../../shared-types';
+import { commonErrorLocaleKey } from '../../localekeys';
 
 interface INotFoundParam {
     entity: string
@@ -9,8 +9,8 @@ interface INotFoundParam {
 }
 
 class NotFoundErrorI18n extends I18nError {
-    constructor(message: string, varibales: { [key: string]: string | number } = {}, messageForDeveloper?: string) {
-        super(message, varibales, LogLevel.Error, messageForDeveloper);
+    constructor(message: string, variables: { [key: string]: string | number } = {}, messageForDeveloper?: string) {
+        super(message, variables, LogLevel.Error, messageForDeveloper);
     }
 }
 

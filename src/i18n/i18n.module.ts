@@ -20,7 +20,10 @@ import { TranslateInterceptor } from './interceptor/translate.interceptor';
 export class I18nModule implements OnModuleInit {
   constructor(private configService: ConfigService, @Inject(Logger) private readonly logger: LoggerService) { }
   async onModuleInit() {
+    this.initI18n();
+  }
 
+  private initI18n() {
     i18next
       .use(middleware.LanguageDetector)
       .use(Backend as any)
@@ -37,11 +40,11 @@ export class I18nModule implements OnModuleInit {
           loadPath: path.resolve(__dirname, '..', '..', 'i18n/locale/{{lng}}/{{ns}}.json')
         },
         initImmediate: true,
-        debug: false// this.configService.get<string>('NODE_ENV') == 'development' ? true : false
+        debug: false // this.configService.get<string>('NODE_ENV') == 'development' ? true : false
       }, (err, t) => {
         console.log(i18next.t);
         if (err)
-          this.logger.error(`translation error: ${err}`)
+          this.logger.error(`translation error: ${err}`);
       });
   }
 }

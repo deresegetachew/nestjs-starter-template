@@ -1,6 +1,6 @@
-import { I18nError, LogLevel } from "@lib/common";
 import { BadRequestException } from "@nestjs/common";
-import { messageEnums } from "../../common/localeKey.enum";
+import { I18nError, LogLevel } from "../../../shared-types";
+import { authErrorLocaleKey } from "../../localekeys/auth";
 
 
 class PasswordLengthToShortI18n extends I18nError {
@@ -14,7 +14,7 @@ export class PasswordLengthToShort extends BadRequestException {
 
     constructor() {
         super();
-        this.I18nError = new PasswordLengthToShortI18n(messageEnums.passwordLengthToShort, { length: 8 });
+        this.I18nError = new PasswordLengthToShortI18n(authErrorLocaleKey.passwordLengthToShort, { length: 8 });
     }
 }
 

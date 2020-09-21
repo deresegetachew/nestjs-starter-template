@@ -6,5 +6,6 @@ export const enum messageEnums {
     passwordLengthToShort = "common:error.password-to-short",
     successfullySignedUp = "common:message.successfully-signed-up",
     confirmationEmailSentToYourAccount = "common:message:account-confirmation-email-sent-to-your-account",
+    test = "common:message.test",
 };
 

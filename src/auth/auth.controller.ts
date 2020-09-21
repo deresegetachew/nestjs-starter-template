@@ -1,9 +1,9 @@
+import { confirmationEmailSentToYourAccount, successfullySignedUpMessage, welcomeMessage } from '@lib/common';
 import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
 import { User } from '../user/user.entity';
 import { AuthService } from './auth.service';
 import { SuccessMsg } from './decorator/successMessage.decorator';
 import { LoginDto, SignUpDto } from './dto';
-import { confirmationEmailSentToYourAccount, successfullySignedUpMessage, welcomeMessage } from './messages';
 
 type RequestRes = Request & {
     res: any

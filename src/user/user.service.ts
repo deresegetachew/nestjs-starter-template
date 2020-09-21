@@ -77,10 +77,10 @@ export class UserService {
         try {
             //check if email is already taken
             const emailAvailable = await this.emailIsAvailable(user.email);
-            console.log("???", emailAvailable)
+
             if (emailAvailable) {
                 const count = await this.usersRepository.count({});
-                console.log("???", count);
+
                 if (!count) {
                     //register as admin
                     user.isAdmin = true;
@@ -107,7 +107,6 @@ export class UserService {
             else
                 throw new InternalServerError(error.message);
         }
-
     }
 
     async updateProfile(id: string, userDetail: UpdateUserDto): Promise<User> {
