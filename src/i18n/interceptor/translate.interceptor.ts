@@ -36,7 +36,6 @@ export class TranslateInterceptor<T> implements NestInterceptor<T, IAppResponse<
 
             if (res.statusCode < 400) {
                 const successMsg: I18nMessage[] = this.reflector.get<I18nMessage[]>("successMsg", context.getHandler());
-                console.log("???$$$ WHAT", successMsg);
                 return next
                     .handle()
                     .pipe(map(value => {

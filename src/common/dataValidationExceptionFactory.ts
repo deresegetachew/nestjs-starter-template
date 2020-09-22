@@ -12,9 +12,14 @@ export const dataValidationExceptionFactory = () => {
             const value = e.value;
             const constraints = Object.keys(e.constraints);
 
+
             return constraints.map((c) => {
-                if (c === MIN_LENGTH)
-                    return new MinLength(field, 8);
+
+                if (c === MIN_LENGTH) {
+                    const _length = parseInt(e.constraints[c].toString().replace(/\D/g, ""));
+
+                    return new MinLength(field, _length);
+                }
                 else if (c === IS_NOT_EMPTY)
                     return new IsNotEmpty(field)
                 else if (c === IS_EMAIL)

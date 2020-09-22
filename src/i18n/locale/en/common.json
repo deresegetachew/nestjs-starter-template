@@ -4,7 +4,26 @@
         "internal-server-error": "Something went wrong from our side, please try again",
         "not-found": "$t(glossary:{{entity}}) with $t(glossary:{{field}}) {{value}} is not found ",
         "email-taken": "An account with $t(glossary:field.email) {{email}} already exists",
-        "password-to-short": "Password must be longer than or equal to {{length}} charachters"
+        "password-to-short": "Password must be longer than or equal to {{length}} characters"
+    },
+    "httpExceptions": {
+        "400": "Bad Request",
+        "401": "Unauthorized",
+        "403": "Forbidden",
+        "404": "Not Found",
+        "405": "Method Not Allowed",
+        "406": "Not Acceptable",
+        "408": "Request Timeout",
+        "409": "Conflict",
+        "410": "Gone",
+        "413": "Payload Too Large",
+        "415": "Unsupported Media Type",
+        "422": "Unporcessable Entity",
+        "500": "Internal Server Error",
+        "501": "Not Implemented",
+        "502": "Bad Gateway",
+        "503": "Service Unavailable",
+        "504": "Gateway Timeout"
     },
     "message": {
         "test": "This is a test message",

@@ -5,7 +5,7 @@
         "email-taken": "በ {{email}} የተመዘገበ መለያ በ አኘሊኬሽን ውስጥ አስቀድሞ አለ"
     },
     "message": {
-        "welcome-login": "Welcome back to {{appname}} {{firstName}}"
+        "welcome-login": "የተመዘገበ back to {{appname}} {{firstName}}"
     },
     "validation": {}
 }

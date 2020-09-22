@@ -87,20 +87,28 @@ export class AppExceptionFilter implements ExceptionFilter {
                         message.push(translatedError.message);
                     }
                     else {
-                        //its an error that has not yet been translated
-                        this.log(exception);
-                        //this.logger.error(`Untranslated Error: ${exception.message} ' Stack: ' ${exception.stack}`)
-                        //tException = [...exception];
-                        if (Array.isArray(exception?.response?.message))
-                            message = [...exception?.response?.message];
-                        else {
-                            if (exception?.response?.message) {
-                                message.push(exception?.response?.message);
-                            }
-                            else if (exception?.message) {
-                                message.push(exception?.message);
-                            }
 
+                        if (exception instanceof HttpException) {
+
+                            const translatedMessage = this.i18nService.translateHttpException(request, exception)
+                            message.push(translatedMessage);
+                        }
+                        else {
+                            //its an error that has not yet been translated
+                            this.log(exception);
+                            //this.logger.error(`Untranslated Error: ${exception.message} ' Stack: ' ${exception.stack}`)
+                            //tException = [...exception];
+                            if (Array.isArray(exception?.response?.message))
+                                message = [...exception?.response?.message];
+                            else {
+                                if (exception?.response?.message) {
+                                    message.push(exception?.response?.message);
+                                }
+                                else if (exception?.message) {
+                                    message.push(exception?.message);
+                                }
+
+                            }
                         }
                     }
                 }
