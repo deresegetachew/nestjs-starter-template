@@ -1,6 +1,6 @@
 
 import { I18nError, I18nMessage, MessageVarType } from '@lib/common';
-import { Inject, Injectable, Logger, LoggerService } from '@nestjs/common';
+import { HttpException, Inject, Injectable, Logger, LoggerService } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Handler, Request } from 'express';
 import i18next, { ExistsFunction, TFunction } from 'i18next';
@@ -109,6 +109,20 @@ export class I18nService {
             return translation;
         }
         return "";
+    }
+
+    translateHttpException(req: I18nRequest, exception: HttpException): string {
+        const t: TFunction = req.t;
+        let translation;
+        if (t && exception) {
+            translation = exception.message;
+            try {
+                translation = t('common:httpExceptions.' + exception.getStatus());
+            } catch (e) {
+                this.logger.error(`(Translation format error: ${e.message})`);
+            }
+        }
+        return translation;
     }
 
 }
