@@ -1,3 +1,5 @@
+import { ExistsFunction, TFunction } from "i18next";
+
 type SuccessResponse<T> = {
     statusCode: number;
     message: string[];
@@ -81,5 +83,12 @@ export interface I18nMessage {
 }
 
 
+export interface I18nRequest extends Request {
+    t: TFunction;
+    exists: ExistsFunction;
+    language: string;
+    languages: string[];
+    dir(lng?: string): 'ltr' | 'rtl';
+}
 
 

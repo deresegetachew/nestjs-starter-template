@@ -87,6 +87,10 @@ export class UserService {
                     user.selfRegistered = true;
                     user.isActive = true;
                     user.accountConfirmed = false;
+
+                    //register client
+
+
                 }
                 else {
                     user.isAdmin = false;

@@ -1,5 +1,5 @@
+import { ValidationPipeService } from '@lib/validation-pipe';
 import { Body, Controller, Get, HttpCode, HttpStatus, Param, ParseUUIDPipe, Post, Put } from '@nestjs/common';
-import { parseUUIDExceptionFactory } from 'src/common/parseUUIDExceptionFactory';
 import { CreateUserDto, UpdateUserDto } from './dto';
 import { User } from './user.entity';
 import { UserService } from './user.service';
@@ -10,7 +10,12 @@ import { UserService } from './user.service';
 //     strategy: 'excludeAll'
 // })
 export class UserController {
-    constructor(private userService: UserService) { }
+
+
+
+    constructor(private userService: UserService) {
+    }
+
 
 
     // @Get("/logout")
@@ -47,10 +52,10 @@ export class UserController {
 
 
     @Get("/:id")
-    useDetail(
+    userDetail(
         @Param('id', new ParseUUIDPipe({
             errorHttpStatusCode: HttpStatus.BAD_REQUEST,
-            exceptionFactory: parseUUIDExceptionFactory('id')
+            exceptionFactory: ValidationPipeService.parseUUIDPipeErrorFactory('id')
         })) id: string): Promise<User> {
         //throw new UnauthorizedException();
         return this.userService.findById(id);
@@ -60,7 +65,7 @@ export class UserController {
     @Put('/:id')
     updateProfile(@Param('id', new ParseUUIDPipe({
         errorHttpStatusCode: HttpStatus.BAD_REQUEST,
-        exceptionFactory: parseUUIDExceptionFactory('id')
+        exceptionFactory: ValidationPipeService.parseUUIDPipeErrorFactory('id')
     })) id: string,
         @Body() data: UpdateUserDto): Promise<User> {
         return this.userService.updateProfile(id, data);
@@ -82,7 +87,7 @@ export class UserController {
     @HttpCode(HttpStatus.OK)
     deactivateUser(@Param('id', new ParseUUIDPipe({
         errorHttpStatusCode: HttpStatus.BAD_REQUEST,
-        exceptionFactory: parseUUIDExceptionFactory('id')
+        exceptionFactory: ValidationPipeService.parseUUIDPipeErrorFactory('id')
     })) id: string): Promise<boolean> {
         return this.userService.deactivateUser(id);
     }

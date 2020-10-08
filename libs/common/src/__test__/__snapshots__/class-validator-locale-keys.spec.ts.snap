@@ -1,3 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`classValidator error Locale keys matches enum definition snapshopt 1`] = `"{\\"isNotEmpty\\":\\"dto:is-not-empty\\",\\"minLength\\":\\"dto:min-length\\",\\"isEmail\\":\\"dto:is-email\\",\\"isString\\":\\"dto:is-string\\"}"`;

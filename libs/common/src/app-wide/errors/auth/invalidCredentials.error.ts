@@ -14,7 +14,7 @@ export class InvalidCredentials extends UnauthorizedException {
     public I18nError: InvalidCredentialsI18n;
     constructor(private email: string) {
         super()
-        this.I18nError = new InvalidCredentialsI18n(authErrorLocaleKey.invalidCredential, { email });
+        this.I18nError = new InvalidCredentialsI18n(authErrorLocaleKey.invalidCredential, { email: this.email });
     }
 
 }

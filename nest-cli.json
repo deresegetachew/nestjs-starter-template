@@ -28,13 +28,43 @@
       "compilerOptions": {
         "tsConfigPath": "libs/pg-connect/tsconfig.lib.json"
       }
+    },
+    "validation-pipe": {
+      "type": "library",
+      "root": "libs/validation-pipe",
+      "entryFile": "index",
+      "sourceRoot": "libs/validation-pipe/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/validation-pipe/tsconfig.lib.json"
+      }
+    },
+    "interceptors": {
+      "type": "library",
+      "root": "libs/interceptors",
+      "entryFile": "index",
+      "sourceRoot": "libs/interceptors/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/interceptors/tsconfig.lib.json"
+      }
+    },
+    "i18n": {
+      "type": "library",
+      "root": "libs/i18n",
+      "entryFile": "index",
+      "sourceRoot": "libs/i18n/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/i18n/tsconfig.lib.json"
+      }
     }
   },
   "compilerOptions": {
     "webpack": false,
     "assets": [
-      "i18n/locale/**/*"
-    ],
-    "watchAssets": true
+      {
+        "include": "i18n/**/*.json",
+        "outDir": "dist/assets",
+        "watchAssets": true
+      }
+    ]
   }
 }

@@ -1,8 +1,7 @@
-import { ClassSerializerInterceptor, ValidationPipe } from '@nestjs/common';
+import { ClassSerializerInterceptor } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory, Reflector } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { dataValidationExceptionFactory } from './common/dataValidationExceptionFactory';
 import loggerConfig from './config/app.logger';
 
 
@@ -15,11 +14,11 @@ async function bootstrap() {
     logger: loggerConfig
   });
 
-  app.useGlobalPipes(new ValidationPipe({
-    whitelist: true,
-    transform: true,
-    exceptionFactory: dataValidationExceptionFactory()
-  }));
+  // app.useGlobalPipes(new ValidationPipe({
+  //   whitelist: true,
+  //   transform: true,
+  //   exceptionFactory: dataValidationExceptionFactory()
+  // }));
 
   app.useGlobalInterceptors(new ClassSerializerInterceptor(
     app.get(Reflector))

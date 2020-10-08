@@ -29,6 +29,24 @@
       ],
       "@db/pg-connect/*": [
         "libs/pg-connect/src/*"
+      ],
+      "@lib/validation-pipe": [
+        "libs/validation-pipe/src"
+      ],
+      "@lib/validation-pipe/*": [
+        "libs/validation-pipe/src/*"
+      ],
+      "@lib/interceptors": [
+        "libs/interceptors/src"
+      ],
+      "@lib/interceptors/*": [
+        "libs/interceptors/src/*"
+      ],
+      "@lib/i18n": [
+        "libs/i18n/src"
+      ],
+      "@lib/i18n/*": [
+        "libs/i18n/src/*"
       ]
     }
   },

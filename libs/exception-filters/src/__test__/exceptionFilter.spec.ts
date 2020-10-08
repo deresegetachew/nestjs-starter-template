@@ -1,9 +1,9 @@
 import { PgConnectService } from "@db/pg-connect";
 import { authErrorLocaleKey, commonErrorLocaleKey, InternalServerError, InvalidCredentials, NotFoundError, PasswordLengthToShort } from "@lib/common";
+import { I18nService } from "@lib/i18n";
 import { ArgumentsHost, BadGatewayException, BadRequestException, ConflictException, ForbiddenException, GatewayTimeoutException, GoneException, InternalServerErrorException, Logger, MethodNotAllowedException, NotAcceptableException, NotFoundException, NotImplementedException, PayloadTooLargeException, RequestTimeoutException, ServiceUnavailableException, UnauthorizedException, UnprocessableEntityException, UnsupportedMediaTypeException } from '@nestjs/common';
 import { ConfigService } from "@nestjs/config";
 import { Test, TestingModule } from "@nestjs/testing";
-import { I18nService } from "src/i18n/i18n.service";
 import { AppExceptionFilter } from "../exceptionFilter";
 
 describe('App Exception Filter', () => {
@@ -166,7 +166,7 @@ describe('App Exception Filter', () => {
         })
 
         it('returns 400 for PasswordLengthToShortError', () => {
-            const exception = new PasswordLengthToShort();
+            const exception = new PasswordLengthToShort(8);
 
             appExceptionFilter.catch(exception, mockArgumentsHost);
 
@@ -179,7 +179,7 @@ describe('App Exception Filter', () => {
             expect(i18nServiceTranslateErrorSpy).toHaveBeenCalled()
             expect(mockT).toHaveBeenCalledWith(authErrorLocaleKey.passwordLengthToShort, { length: 8 })
             expect(appExceptionFilterLogSpy).toHaveBeenCalled();
-            expect(loggerErrorSpy).toHaveBeenCalledTimes(1);
+            expect(loggerLogSpy).toHaveBeenCalledTimes(1);
             expect(mockStatus).toBeCalledWith(400);
             expect(mockJson).toBeCalledWith({
                 statusCode: 400,

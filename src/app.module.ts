@@ -1,16 +1,16 @@
 // import TypeOrmConfigService from './config/typeOrm.config';
 import { ExceptionFiltersModule } from '@app/exception-filters';
-import { TypeOrmConfigService } from '@db/pg-connect';
+import { PgConnectModule, TypeOrmConfigService } from '@db/pg-connect';
+import { I18nModule, I18nService } from '@lib/i18n';
+import { ValidationPipeModule } from '@lib/validation-pipe';
 import { Logger, MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { PgConnectModule } from 'libs/pg-connect/src';
+import { InterceptorsModule } from 'libs/interceptors/src';
 import { AuthModule } from './auth/auth.module';
 import { AuthorizationModule } from './authorization/authorization.module';
 import { ClientModule } from './client/client.module';
 import appConfig from './config/app.config';
-import { I18nModule } from './i18n/i18n.module';
-import { I18nService } from './i18n/i18n.service';
 import { UserModule } from './user/user.module';
 
 @Module({
@@ -29,6 +29,8 @@ import { UserModule } from './user/user.module';
     AuthModule,
     I18nModule,
     ExceptionFiltersModule,
+    ValidationPipeModule,
+    InterceptorsModule
   ],
   providers: [Logger]
 })

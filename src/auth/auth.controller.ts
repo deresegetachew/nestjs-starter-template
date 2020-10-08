@@ -5,6 +5,7 @@ import { AuthService } from './auth.service';
 import { SuccessMsg } from './decorator/successMessage.decorator';
 import { LoginDto, SignUpDto } from './dto';
 
+
 type RequestRes = Request & {
     res: any
 };
@@ -22,8 +23,6 @@ export class AuthController {
         return this.authService.userNamePasswordLogin(loginDto);
     }
 
-    //how about we attach the message to the request decorator
-    //typescript things like omit ... to create entityTypes + responseType
 
 
     @Post('signup')
